@@ -1,0 +1,68 @@
+<div class="container px-3">
+    <div class="header">
+        <div
+            class="surface-card flex flex-column flex-wrap align-items-center justify-content-start lg:justify-content-between md:flex-row border-round-2xl p-3 mt-3">
+            <div *ngFor="let data of weatherData">
+                <div class="important-cities flex align-items-center gap-3 p-3"
+                    (click)="getWeatherAndForecastByCity(data.name)">
+                    <img [src]="data.imagePath" alt="{{data.name}} image" loading="lazy">
+                    <div class="flex flex-column">
+                        <h3 class="my-0">{{data.name}}</h3>
+                        <p class="my-0"><span class="text-2xl font-medium">{{data.main.temp}}</span> <sup
+                                class="ml-1">℃</sup></p>
+                        <p class="my-0">{{data.weather[0].main}}</p>
+                        <small class="my-0 text-600">Humidity: {{data.main.humidity}}%</small>
+                        <div class="flex align-items-center justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="flex flex-column md:flex-row gap-3 mt-3 h-27rem">
+        <div class="surface-card border-round-2xl w-full md:w-4 lg:w-4 p-5">
+            <form class="mb-3">
+                <div class="p-inputgroup">
+                    <input type="search" name="city" pInputText placeholder="Search by city name..."
+                        [(ngModel)]="cityName" />
+                    <button type="submit" pButton icon="pi pi-search" styleClass="p-button-primary"
+                        (click)="getWeatherAndForecastByCity(cityName)"></button>
+                </div>
+            </form>
+            <ng-container *ngIf="currentWeatherContainer" class="current-location-details mt-4">
+                <div class="flex flex-column align-items-center gap-3">
+                    <p class="my-0">Allow location access to get current weather</p>
+                    <p-button label="Get my current weather" [raised]="true" (onClick)="askPermission()"></p-button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!currentWeatherContainer" class="search-weather-details mt-4">
+                <div class="flex flex-column align-items-center gap-3 mt-4">
+                    <h3 class="my-0">{{weatherDetails?.name}}, {{weatherDetails.sys.country}}</h3>
+                    <p class="my-0"><span class="text-2xl font-medium">{{weatherDetails.main.temp}}</span> <sup
+                            class="ml-1">℃</sup></p>
+                    <div class="w-7 flex justify-content-between">
+                        <span>
+                            <small>Min:</small>
+                            <p class="my-0"><span class="text-xl font-medium">{{weatherDetails.main.temp_min}}</span>
+                                <sup class="ml-1">℃</sup>
+                            </p>
+                        </span>
+                        <span>
+                            <small>Max:</small>
+                            <p class="my-0"><span class="text-xl font-medium">{{weatherDetails.main.temp_min}}</span>
+                                <sup class="ml-1">℃</sup>
+                            </p>
+                        </span>
+                    </div>
+                    <img src='https://openweathermap.org/img/wn/{{weatherDetails.weather[0].icon}}@2x.png'
+                        alt="weather icon" loading="lazy" />
+                    <p class="my-0">{{weatherDetails.weather[0].description}}</p>
+                    <small class="my-0 text-600">Humidity: {{weatherDetails.main.humidity}}%</small>
+                </div>
+            </ng-container>
+        </div>
+        <div class="surface-card border-round-2xl w-full md:w-8 lg:w-8 p-3">
+            <p-chart type="line" [data]="data" [options]="options" height="390px"></p-chart>
+        </div>
+    </section>
+</div>

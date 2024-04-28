@@ -1,0 +1,18 @@
+img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    -webkit-clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.important-cities {
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(0 30px 10px #000);
+    filter: drop-shadow(0 30px 10px #000);
+}
+
+.important-cities:hover {
+    scale: 1.2;
+}
